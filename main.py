@@ -213,7 +213,4 @@ def add_friend():                       #Function to add Friend
                         return "Number of Friends :"+str(len(friends))
 
 
-
-
-
 start_chat()               #Calling of main function start_chat()
