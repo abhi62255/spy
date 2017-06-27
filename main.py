@@ -4,7 +4,6 @@ from datetime import datetime           #Importing function form Datetime Librar
 status_messages = []          #Declaring a list to Store Status from the User
 friends = []            #Declaring a list to Store information of the friend of User
 
-
 def start_chat():   # Main Function
     choice =1
     while choice != 3:
@@ -128,13 +127,12 @@ def send_a_message():           #Function to send a Message
     chat = {
         "message": text,
         "time": datetime.now(),
-        "sent_by_me": True
+        "send_by_me": True
     }
     friends[friend_choice]['chats'].append(chat)
 
 
     print "Your secret message image is ready"
-    #print(friends[friend_choice]['chats'])
 
 
 def read_a_message():           #Function to Read A Message
@@ -146,7 +144,7 @@ def read_a_message():           #Function to Read A Message
     chat = {
         "message": secret_text,
         "time": datetime.now(),
-        "sent_by_me": False
+        "send_by_me": False
     }
 
     friends[sender]['chats'].append(chat)
@@ -161,10 +159,10 @@ def read_chat():
     print '\n'
 
     for chat in friends[read_for]['chats']:
-        if chat.sent_by_me:
+        if chat['send_by_me']:
             print '[%s] %s: %s' % (chat.time.strftime("%d %B %Y"), 'You said:', chat.message)
         else:
-            print '[%s] %s said: %s' % (chat.time.strftime("%d %B %Y"), friends[read_for].name, chat.message)
+            print '[%s] %s said: %s' % (chat['time'].strftime("%d %B %Y"), friends[read_for]['name'], chat['message'])
 
 
 def select_a_friend():           #Function to show friend list
@@ -178,7 +176,13 @@ def select_a_friend():           #Function to show friend list
 
 
 def add_friend() :              #Function to add Friend
-    new_friend = {'name': '', 'salutation': '', 'age': '', 'rating': '', 'chats': ''}
+    new_friend = {
+        'name': '',
+        'salutation': '',
+        'age': '',
+        'rating': '',
+        'chats': []
+    }
     print("Number of Friends :"+str(len(friends)))
     new_friend['name'] = raw_input("Enter Name of Your Friend : ")
     if len(new_friend['name']) == 0:
