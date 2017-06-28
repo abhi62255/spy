@@ -134,17 +134,18 @@ def read_a_message():           # Function to Read A Message
     sender = select_a_friend()          # Calling of select_a_friend() Function
     output_path = raw_input("What is the name of the file? ")
     try:
-        length=0
-        n=1
+        length_chat = 0           # To store Maintain the average number of words spoken by a spy
+        count = 1
         secret_text = Steganography.decode(output_path)
 
-        length = int(length +len(secret_text.split()))
-        length=length/n
-        n=n+1
+        length_chat = int(length_chat +len(secret_text.split()))
+        length_chat=length_chat/count
+        count=count+1
 
-        new_chat = ChatMessage(secret_text,length,False,)
+        new_chat = ChatMessage(secret_text,length_chat,False,)
         friends[sender].chats.append(new_chat)
         print "Your secret message has been saved \n Message is : %s" % (secret_text)
+
         if secret_text.upper() == 'SOS' or secret_text.upper() == 'SAVE ME' or secret_text.upper() == 'DANGER' or secret_text.upper() == 'SAVEME':
             print "**WARNING** \n  Spy %s ''NEED HELP IMMEDIATELY''" % (friends[sender].name)
 
