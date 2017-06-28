@@ -136,11 +136,18 @@ def read_a_message():           # Function to Read A Message
     secret_text = Steganography.decode(output_path)
 
     new_chat = ChatMessage(secret_text, False)
-
     friends[sender].chats.append(new_chat)
-
     print "Your secret message has been saved \n Message is : %s" %(secret_text)
+    if secret_text.upper() == 'SOS' or secret_text.upper() == 'SAVE ME' or secret_text.upper() == 'DANGER' or secret_text.upper() == 'SAVEME':
+        print "**WARNING** \n  Spy %s ''NEED HELP IMMEDIATELY''" % (friends[sender].name)
 
+    if len(secret_text) > 100:
+        print "Your Friend Spy  %s Is speaking too much." % (friends[sender].name)
+        print "So, Cheif decided To Kick Spy Out of  The Application"
+        del friends[sender]
+
+    if len(secret_text) == 0:
+        print("-->>You received an Empty Image<<-- \n There can be some Problem \n")
 
 def read_chat_history():
 
@@ -204,6 +211,7 @@ def add_friend() :              # Function to add Friend
                         print ("Your Friend has been Added \n")
                         friends.append(new_friend)
                         return "Number of Friends :"+str(len(friends))
+
 
 
 start_chat()               # Calling of main function start_chat()
