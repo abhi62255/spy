@@ -1,78 +1,77 @@
-from steganography.steganography import Steganography   #Importing function form Steganography Library
-import spy_details         #Improting Classes and Variables from  spy_details.py file
-from datetime import datetime           #Importing function form Datetime Library
-status_messages = []          #Declaring a list to Store Status from the User
-friends = []            #Declaring a list to Store information of the friend of User
+from steganography.steganography import Steganography   # Importing function form Steganography Library
+from spy_details import spy, Spy, ChatMessage, friends ,user_spy_rating        # Importing Classes and Variables from  spy_details.py file
+status_messages = []          # Declaring a list to Store Status from the User
+
 
 def start_chat():   # Main Function
-    choice =1
+    choice = 1
     while choice != 3:
-        print(" 1 Enter as a Guest \n 2 To Create New Account \n 3 To Exit Application")  #Frist Menu Options
+        print(" 1 Enter as a Guest \n 2 To Create New Account \n 3 To Exit Application")  # First Menu Options
         choice = int(raw_input("ENTER YOUR CHOICE :-"))
         if choice == 1:
-            print("Welcome %s " % (spy_details.spy_name))
+            print("Welcome %s %s " % (spy.salutation,spy.name))
             menu()
 
         elif choice == 2:
             print "Add All The Details Carefully For Wrong Information Your Execution Will Be Terminated"
             print "Age limit to be a spy 12 - 50"
-            spy_name = raw_input("Tell us your name : ")            #Taking Name as Input
-            if len(spy_name) == 0 :
+            spy.name = raw_input("Tell us your name : ")            # Taking Name as Input
+            if len(spy.name) == 0 :
                 print("You are not providing valid information")
-            elif spy_name.isalpha() == 0:
+            elif spy.name.isalpha() == 0:
                 print("You are not providing valid information ")
             else:
-                spy_age = raw_input("Enter your age : ")
+                spy.age = raw_input("Enter your age : ")
 
-                if len(spy_age) == 0:
+                if len(spy.age) == 0:
                     print("You are not providing valid information \n")
-                elif spy_age.isdigit() == 0:
+                elif spy.age.isdigit() == 0:
                     print("You  are not providing valid information \n")
                 else:
-                    spy_sge=int(spy_age)                #Converting age into an Integer value
-                    if int(spy_age) < 12 or int(spy_age) > 50:
+                    spy.sge=int(spy.age)                # Converting age into an Integer value
+                    if int(spy.age) < 12 or int(spy.age) > 50:
                             print("You are not eligible to be a spy \n")
                     else:
-                        spy_salutation = raw_input("What should we call you (Mr or Ms) : ")
-                        if len(spy_salutation) == 0 :
+                        spy.salutation = raw_input("What should we call you (Mr or Ms) : ")
+                        if len(spy.salutation) == 0 :
                             print("You are not providing valid Option")
-                        elif spy_salutation.isalpha() == 0:
+                        elif spy.salutation.isalpha() == 0:
                             print("you are not providing valid information ")
                         else:
-                            spy_name = spy_salutation+" "+spy_name
-                            spy_rating = raw_input("Enter your rating : ")
-                            if len(spy_rating) == 0:
+                            spy.name = spy.salutation+" "+spy.name
+                            spy.rating = raw_input("Enter your rating : ")
+                            if len(spy.rating) == 0:
                                 print("You are not providing correct information \n")
                             else:
-                                spy_rating = float(spy_rating)      #Converting Rating into an Floating value
-                                if float(spy_rating) > 4.0:
+                                spy.rating = float(spy.rating)      # Converting Rating into an Floating value
+                                if float(spy.rating) > 4.0:
                                     print("--->>>You Can Be A Good Leader<<<---")
-                                elif float(spy_rating) < 4.0 and float(spy_rating) > 3.0:
+                                elif float(spy.rating) < 4.0 and float(spy.rating) > 3.0:
                                     print("-->>You Are Good To BE In A Team<<--")
                                 else:
                                     print("->We Can Always Use An Helping Hand<-")
-                                print (" Your account has been created \n Welcome %s .We are happy to have you here. \n Your age %s and Rating is %s" %(spy_name,spy_age,spy_rating))
-                                menu()         #Calling of menu function which provide second menu options
+                                print (" Your account has been created \n Welcome %s .We are happy to have you here. \n Your age %s and Rating is %s" %(spy.name,spy.age,spy.rating))
+                                menu()         # Calling of menu function which provide second menu options
 
 
-def menu():             #Function for Second Menu options
+def menu():             # Function for Second Menu options
     current_status_message=None
     choice2 = int(raw_input(" 1) To Add Status \n 2) To Add friend \n 3) Send A Secret Message \n 4) Read A Secret Message \n 5) Read chats history from a user \n 6) Go To Main Menu \n ENTER YOUR CHOICE  :- "))
     while True:
         if choice2 == 1:
-            current_status_message=(status_update(current_status_message))          #Calling of status_update() function
+            current_status_message=(status_update(current_status_message))          # Calling of status_update() function
 
         elif choice2 == 2:
             choice3 = 'Y'
             while choice3.upper() == 'Y':
-                print(add_friend())         #Calling of add_friend() function
+                print(add_friend())         # Calling of add_friend() function
                 choice3 = raw_input("want to add more friends (Y or N)\n")
         elif choice2 == 3:
-            send_a_message()            #calling of send_a_message() function
+            send_a_message()            # Calling of send_a_message() function
         elif choice2 == 4:
-            read_a_message()            #calling of read_a_message() function
+            read_a_message()            # Calling of read_a_message() function
         elif choice2 == 5:
-            read_chat()             #calling of read_chat() function
+            read_chat_history()             # Calling of read_chat() function
         elif choice2 == 6:
             break
         else:
@@ -92,7 +91,7 @@ def status_update(current_status_message):  # Function to add a status
 
     choice = raw_input("Want to chose from old status (Y or N) : ")
 
-    if choice.upper() == 'N':           #Add new status
+    if choice.upper() == 'N':           # Add new status
 
         new_status_message = raw_input("Enter your status : ")
 
@@ -102,7 +101,7 @@ def status_update(current_status_message):  # Function to add a status
             updated_status_message = new_status_message
             status_messages.append(new_status_message)
 
-    elif choice.upper() == 'Y':         #Chose from old status
+    elif choice.upper() == 'Y':         # Chose from old status
         counter=1
         for temp in status_messages:
             print(str(counter) + " " + temp)
@@ -116,107 +115,95 @@ def status_update(current_status_message):  # Function to add a status
     return updated_status_message
 
 
-def send_a_message():           #Function to send a Message
+def send_a_message():           # Function to send a Message
 
-    friend_choice = select_a_friend()           #Calling of select_a_friend() Function
+    friend_choice = select_a_friend()           # Calling of select_a_friend() Function
     original_image = raw_input("What is the name of the image? ")
     output_path = "output.jpg"
     text = raw_input("What do you want to say? ")
     Steganography.encode(original_image, output_path, text)
 
-    chat = {
-        "message": text,
-        "time": datetime.now(),
-        "send_by_me": True
-    }
-    friends[friend_choice]['chats'].append(chat)
+    new_chat = ChatMessage(text, True)
 
-
+    friends[friend_choice].chats.append(new_chat)
     print "Your secret message image is ready"
 
 
-def read_a_message():           #Function to Read A Message
+def read_a_message():           # Function to Read A Message
 
-    sender = select_a_friend()          #Calling of select_a_friend() Function
+    sender = select_a_friend()          # Calling of select_a_friend() Function
     output_path = raw_input("What is the name of the file? ")
     secret_text = Steganography.decode(output_path)
 
-    chat = {
-        "message": secret_text,
-        "time": datetime.now(),
-        "send_by_me": False
-    }
+    new_chat = ChatMessage(secret_text, False)
 
-    friends[sender]['chats'].append(chat)
+    friends[sender].chats.append(new_chat)
 
-    print "Your secret message has been saved"
+    print "Your secret message has been saved \n Message is : %s" %(secret_text)
 
 
-def read_chat():
+def read_chat_history():
 
-    read_for = select_a_friend()            #Calling of select_a_friend() Function
+    read_for = select_a_friend()            # Calling of select_a_friend() Function
 
     print '\n'
 
-    for chat in friends[read_for]['chats']:
-        if chat['send_by_me']:
-            print '[%s] You said: %s To %s' % (chat.time.strftime("%d %B %Y"), chat.message,friends[read_for]['name'])
+    for chat in friends[read_for].chats:
+        if chat.sent_by_me:
+            print '[%s] %s: %s' % (chat.time.strftime("%d %B %Y  %I:%M %p"), 'You said:', chat.message)
         else:
-            print '[%s] %s said: %s' % (chat['time'].strftime("%d %B %Y"), friends[read_for]['name'], chat['message'])
+            print '[%s] %s (You Received): %s' % (chat.time.strftime("%d %B %Y  %I:%M %p"), friends[read_for].name, chat.message)
+
+            # read_chat history function ends
 
 
-def select_a_friend():           #Function to show friend list
+def select_a_friend():           # Function to show friend list
     counter = 1
     for temp in friends:
-        print ("%d %s " % (counter,temp['name']))
+        print ("%d %s " % (counter,temp.name))
         counter = counter + 1
+
     friend_choice = int(raw_input("Chose the Friend To Communicate With\n"))
     friend_choice_position = friend_choice-1
     return(friend_choice_position)
 
 
-def add_friend() :              #Function to add Friend
-    new_friend = {
-        'name': '',
-        'salutation': '',
-        'age': '',
-        'rating': '',
-        'chats': []
-    }
+def add_friend() :              # Function to add Friend
+    new_friend = Spy('','',0,0.0)
     print("Number of Friends :"+str(len(friends)))
-    new_friend['name'] = raw_input("Enter Name of Your Friend : ")
-    if len(new_friend['name']) == 0:
+    new_friend.name = raw_input("Enter Name of Your Friend : ")
+    if len(new_friend.name) == 0:
         print("You are not providing valid information")
-    elif new_friend['name'].isalpha() == 0:
+    elif new_friend.name.isalpha() == 0:
         print("you are not providing valid information ")
     else:
-        new_friend['age'] = raw_input("Enter your Friends Age : ")
-        if len(new_friend['age']) == 0:
+        new_friend.age = raw_input("Enter your Friends Age : ")
+        if len(new_friend.age) == 0:
             print("You are not providing valid information \n")
-        elif new_friend['age'].isdigit() == 0:
+        elif new_friend.age.isdigit() == 0:
             print("You  are not providing valid information \n")
         else:
-            new_friend['age']=int(new_friend['age'])            #Converting Age into Integer type
-            if int(new_friend['age']) < 12 or int(new_friend['age']) > 50:
+            new_friend.age=int(new_friend.age)            # Converting Age into Integer type
+            if int(new_friend.age) < 12 or int(new_friend.age) > 50:
                 print("Not eligible to be a friend in spy  application\n")
             else:
-                new_friend['salutation'] = raw_input("What should we call you (Mr or Ms) : ")
-                if len(new_friend['salutation']) == 0:
+                new_friend.salutation = raw_input("What should we call you (Mr or Ms) : ")
+                if len(new_friend.salutation) == 0:
                     print("You are not providing valid option")
-                elif new_friend['salutation'].isalpha() == 0:
+                elif new_friend.salutation.isalpha() == 0:
                     print("You are not providing valid information ")
                 else:
-                    new_friend['name'] = new_friend['salutation'] + " " + new_friend['name']
-                    new_friend['rating'] = raw_input("Enter your friends rating : ")
-                    if len(new_friend['rating']) == 0:
+                    new_friend.name = new_friend.salutation + " " + new_friend.name
+                    new_friend.rating = raw_input("Enter your friends rating : ")
+                    if len(new_friend.rating) == 0:
                         print("You are not providing correct information \n")
-                    elif float(new_friend['rating']) < spy_details.user_spy_rating :
+                    elif float(new_friend.rating) < user_spy_rating :
                         print "Your Friends Rating is not Good to be a Spy on this Application"
                     else:
-                        new_friend['rating'] = float(new_friend['rating'])          #Converting Rating Into Floating Type
+                        new_friend.rating = float(new_friend.rating)          # Converting Rating Into Floating Type
                         print ("Your Friend has been Added \n")
                         friends.append(new_friend)
                         return "Number of Friends :"+str(len(friends))
 
 
-start_chat()               #Calling of main function start_chat()
+start_chat()               # Calling of main function start_chat()
