@@ -14,9 +14,10 @@ spy=Spy('Bond','Mr',21,5.0)
 user_spy_rating = 2.0
 
 class ChatMessage:
-    def __init__(self,message,sent_by_me):
+    def __init__(self,message,length,send_by_me):
         self.message=message
         self.time=datetime.now()
-        self.sent_by_me=sent_by_me
+        self.length=length
+        self.sent_by_me=send_by_me
 
 friends = []

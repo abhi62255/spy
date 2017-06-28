@@ -28,8 +28,8 @@ def start_chat():   # Main Function
                 elif spy.age.isdigit() == 0:
                     print("You  are not providing valid information \n")
                 else:
-                    spy.sge=int(spy.age)                # Converting age into an Integer value
-                    if int(spy.age) < 12 or int(spy.age) > 50:
+                    spy.age=int(spy.age)                # Converting age into an Integer value
+                    if spy.age< 12 or spy.age > 50:
                             print("You are not eligible to be a spy \n")
                     else:
                         spy.salutation = raw_input("What should we call you (Mr or Ms) : ")
@@ -44,9 +44,9 @@ def start_chat():   # Main Function
                                 print("You are not providing correct information \n")
                             else:
                                 spy.rating = float(spy.rating)      # Converting Rating into an Floating value
-                                if float(spy.rating) > 4.0:
+                                if spy.rating > 4.0:
                                     print("--->>>You Can Be A Good Leader<<<---")
-                                elif float(spy.rating) < 4.0 and float(spy.rating) > 3.0:
+                                elif spy.rating < 4.0 and spy.rating > 3.0:
                                     print("-->>You Are Good To BE In A Team<<--")
                                 else:
                                     print("->We Can Always Use An Helping Hand<-")
@@ -133,21 +133,29 @@ def read_a_message():           # Function to Read A Message
 
     sender = select_a_friend()          # Calling of select_a_friend() Function
     output_path = raw_input("What is the name of the file? ")
-    secret_text = Steganography.decode(output_path)
+    try:
+        length=0
+        n=1
+        secret_text = Steganography.decode(output_path)
 
-    new_chat = ChatMessage(secret_text, False)
-    friends[sender].chats.append(new_chat)
-    print "Your secret message has been saved \n Message is : %s" %(secret_text)
-    if secret_text.upper() == 'SOS' or secret_text.upper() == 'SAVE ME' or secret_text.upper() == 'DANGER' or secret_text.upper() == 'SAVEME':
-        print "**WARNING** \n  Spy %s ''NEED HELP IMMEDIATELY''" % (friends[sender].name)
+        length = int(length +len(secret_text.split()))
+        length=length/n
+        n=n+1
 
-    if len(secret_text) > 100:
-        print "Your Friend Spy  %s Is speaking too much." % (friends[sender].name)
-        print "So, Cheif decided To Kick Spy Out of  The Application"
-        del friends[sender]
+        new_chat = ChatMessage(secret_text,length,False,)
+        friends[sender].chats.append(new_chat)
+        print "Your secret message has been saved \n Message is : %s" % (secret_text)
+        if secret_text.upper() == 'SOS' or secret_text.upper() == 'SAVE ME' or secret_text.upper() == 'DANGER' or secret_text.upper() == 'SAVEME':
+            print "**WARNING** \n  Spy %s ''NEED HELP IMMEDIATELY''" % (friends[sender].name)
 
-    if len(secret_text) == 0:
-        print("-->>You received an Empty Image<<-- \n There can be some Problem \n")
+        if len(secret_text.split()) > 100:
+            print "Your Friend Spy  %s Is speaking too much." % (friends[sender].name)
+            print "So, Cheif decided To Kick Spy Out of  The Application"
+            del friends[sender]
+
+    except:
+        print("-->>You received an Empty Image<<-- \n -->> Or You are providing Wrong Image \n")
+
 
 def read_chat_history():
 
