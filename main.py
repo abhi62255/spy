@@ -10,48 +10,48 @@ def start_chat():   # Main Function
         print(" 1 Enter as a Guest \n 2 To Create New Account \n 3 To Exit Application")  #Frist Menu Options
         choice = int(raw_input("ENTER YOUR CHOICE :-"))
         if choice == 1:
-            print("Welcome %s %s " % (spy_details.spy.salutation,spy_details.spy.name))
+            print("Welcome %s " % (spy_details.spy_name))
             menu()
 
         elif choice == 2:
             print "Add All The Details Carefully For Wrong Information Your Execution Will Be Terminated"
             print "Age limit to be a spy 12 - 50"
-            spy_details.spy.name = raw_input("Tell us your name : ")            #Taking Name as Input
-            if len(spy_details.spy.name) == 0 :
+            spy_name = raw_input("Tell us your name : ")            #Taking Name as Input
+            if len(spy_name) == 0 :
                 print("You are not providing valid information")
-            elif spy_details.spy.name.isalpha() == 0:
+            elif spy_name.isalpha() == 0:
                 print("You are not providing valid information ")
             else:
-                spy_details.spy.age = raw_input("Enter your age : ")
+                spy_age = raw_input("Enter your age : ")
 
-                if len(spy_details.spy.age) == 0:
+                if len(spy_age) == 0:
                     print("You are not providing valid information \n")
-                elif spy_details.spy.age.isdigit() == 0:
+                elif spy_age.isdigit() == 0:
                     print("You  are not providing valid information \n")
                 else:
-                    spy_details.spy.sge=int(spy_details.spy.age)                #Converting age into an Integer value
-                    if int(spy_details.spy.age) < 12 or int(spy_details.spy.age) > 50:
+                    spy_sge=int(spy_age)                #Converting age into an Integer value
+                    if int(spy_age) < 12 or int(spy_age) > 50:
                             print("You are not eligible to be a spy \n")
                     else:
-                        spy_details.spy.salutation = raw_input("What should we call you (Mr or Ms) : ")
-                        if len(spy_details.spy.salutation) == 0 :
+                        spy_salutation = raw_input("What should we call you (Mr or Ms) : ")
+                        if len(spy_salutation) == 0 :
                             print("You are not providing valid Option")
-                        elif spy_details.spy.salutation.isalpha() == 0:
+                        elif spy_salutation.isalpha() == 0:
                             print("you are not providing valid information ")
                         else:
-                            spy_details.spy.name = spy_details.spy.salutation+" "+spy_details.spy.name
-                            spy_details.spy.rating = raw_input("Enter your rating : ")
-                            if len(spy_details.spy.rating) == 0:
+                            spy_name = spy_salutation+" "+spy_name
+                            spy_rating = raw_input("Enter your rating : ")
+                            if len(spy_rating) == 0:
                                 print("You are not providing correct information \n")
                             else:
-                                spy_details.spy.rating = float(spy_details.spy.rating)      #Converting Rating into an Floating value
-                                if float(spy_details.spy.rating) > 4.0:
+                                spy_rating = float(spy_rating)      #Converting Rating into an Floating value
+                                if float(spy_rating) > 4.0:
                                     print("--->>>You Can Be A Good Leader<<<---")
-                                elif float(spy_details.spy.rating) < 4.0 and float(spy_details.spy.rating) > 3.0:
+                                elif float(spy_rating) < 4.0 and float(spy_rating) > 3.0:
                                     print("-->>You Are Good To BE In A Team<<--")
                                 else:
                                     print("->We Can Always Use An Helping Hand<-")
-                                print (" Your account has been created \n Welcome %s .We are happy to have you here. \n Your age %s and Rating is %s" %(spy_details.spy.name,spy_details.spy.age,spy_details.spy.rating))
+                                print (" Your account has been created \n Welcome %s .We are happy to have you here. \n Your age %s and Rating is %s" %(spy_name,spy_age,spy_rating))
                                 menu()         #Calling of menu function which provide second menu options
 
 
@@ -160,7 +160,7 @@ def read_chat():
 
     for chat in friends[read_for]['chats']:
         if chat['send_by_me']:
-            print '[%s] %s: %s' % (chat.time.strftime("%d %B %Y"), 'You said:', chat.message)
+            print '[%s] You said: %s To %s' % (chat.time.strftime("%d %B %Y"), chat.message,friends[read_for]['name'])
         else:
             print '[%s] %s said: %s' % (chat['time'].strftime("%d %B %Y"), friends[read_for]['name'], chat['message'])
 
