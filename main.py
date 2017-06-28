@@ -4,10 +4,12 @@ status_messages = []          # Declaring a list to Store Status from the User
 
 
 def start_chat():   # Main Function
-    choice = 1
-    while choice != 3:
+    while True:
         print(" 1 Enter as a Guest \n 2 To Create New Account \n 3 To Exit Application")  # First Menu Options
-        choice = int(raw_input("ENTER YOUR CHOICE :-"))
+        choice = raw_input("ENTER YOUR CHOICE :-")
+        if choice.isdigit() == True:
+            choice=int(choice)
+
         if choice == 1:
             print("Welcome %s %s " % (spy.salutation,spy.name))
             menu()
@@ -52,12 +54,18 @@ def start_chat():   # Main Function
                                     print("->We Can Always Use An Helping Hand<-")
                                 print (" Your account has been created \n Welcome %s .We are happy to have you here. \n Your age %s and Rating is %s" %(spy.name,spy.age,spy.rating))
                                 menu()         # Calling of menu function which provide second menu options
-
+        elif choice == 3:
+            break
+        else:
+            print "\n\n[[Select From Valid Options]]"
 
 def menu():             # Function for Second Menu options
     current_status_message=None
-    choice2 = int(raw_input(" 1) To Add Status \n 2) To Add friend \n 3) Send A Secret Message \n 4) Read A Secret Message \n 5) Read chats history from a user \n 6) Go To Main Menu \n ENTER YOUR CHOICE  :- "))
     while True:
+        choice2 = raw_input(
+            " 1) To Add Status \n 2) To Add friend \n 3) Send A Secret Message \n 4) Read A Secret Message \n 5) Read chats history from a user \n 6) Go To Main Menu \n ENTER YOUR CHOICE  :- ")
+        if choice2.isdigit() == True:
+            choice2=int(choice2)
         if choice2 == 1:
             current_status_message=(status_update(current_status_message))          # Calling of status_update() function
 
@@ -75,8 +83,7 @@ def menu():             # Function for Second Menu options
         elif choice2 == 6:
             break
         else:
-            print "[[Select From Valid Options]]"
-        choice2 = int(raw_input(" 1) To Add Status \n 2) To Add friend \n 3) Send A Secret Message \n 4) Read A Secret Message \n 5) Read chats history from a user \n 6) Go To Main Menu \n ENTER YOUR CHOICE  :- "))
+            print "\n\n[[Select From Valid Options]]"
 
 
 def status_update(current_status_message):  # Function to add a status
@@ -102,12 +109,19 @@ def status_update(current_status_message):  # Function to add a status
             status_messages.append(new_status_message)
 
     elif choice.upper() == 'Y':         # Chose from old status
-        counter=1
-        for temp in status_messages:
-            print(str(counter) + " " + temp)
-            counter = counter + 1
-        choice2 = int(raw_input("Choose the status  "))
-        updated_status_message = status_messages[choice2 - 1]
+        try:
+            counter=1
+            for temp in status_messages:
+                print(str(counter) + " " + temp)
+                counter = counter + 1
+            choice2 = int(raw_input("Choose the status  "))
+            updated_status_message = status_messages[choice2 - 1]
+        except:
+            print "You Don't have Any Status At This Point \n"
+
+    else :
+        print "\n[[Select From Valid Options]]\n"
+        status_update(current_status_message)
 
     if(updated_status_message):
         print "  STATUS UPDATED -> "+updated_status_message
@@ -116,17 +130,18 @@ def status_update(current_status_message):  # Function to add a status
 
 
 def send_a_message():           # Function to send a Message
+    try:
+        friend_choice = select_a_friend()           # Calling of select_a_friend() Function
+        original_image = raw_input("What is the name of the image? ")
+        output_path = "output.jpg"
+        text = raw_input("What do you want to say? ")
+        Steganography.encode(original_image, output_path, text)
+        new_chat = ChatMessage(text,'',True)
+        friends[friend_choice].chats.append(new_chat)
+        print "Your secret message image is ready"
 
-    friend_choice = select_a_friend()           # Calling of select_a_friend() Function
-    original_image = raw_input("What is the name of the image? ")
-    output_path = "output.jpg"
-    text = raw_input("What do you want to say? ")
-    Steganography.encode(original_image, output_path, text)
-
-    new_chat = ChatMessage(text, True)
-
-    friends[friend_choice].chats.append(new_chat)
-    print "Your secret message image is ready"
+    except:
+        print("[[You are not providing valid Information to send a message]] \n")
 
 
 def read_a_message():           # Function to Read A Message
