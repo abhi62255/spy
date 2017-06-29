@@ -11,6 +11,7 @@ class Spy:
         self.current_status_message = None
 
 spy=Spy('Bond','Mr',21,5.0)
+friend_one=Spy('Chief','',35,5.0)
 user_spy_rating = 2.0
 
 class ChatMessage:
@@ -20,4 +21,4 @@ class ChatMessage:
         self.length=length_chat
         self.sent_by_me=send_by_me
 
-friends = []
+friends = [friend_one]

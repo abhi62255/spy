@@ -1,10 +1,12 @@
 from steganography.steganography import Steganography   # Importing function form Steganography Library
 from spy_details import spy, Spy, ChatMessage, friends ,user_spy_rating        # Importing Classes and Variables from  spy_details.py file
+from colorconsole import terminal
+screen = terminal.get_terminal(conEmu=False)
 status_messages = []          # Declaring a list to Store Status from the User
 
 def start_chat():   # Main Function
     while True:
-        print(" 1 Enter as a Guest \n 2 To Create New Account \n 3 To Exit Application")  # First Menu Options
+        print(" 1) Enter as a Guest \n 2) To Create New Account \n 3) To Exit Application")  # First Menu Options
         choice = raw_input("ENTER YOUR CHOICE :-")
         if choice.isdigit() == True:
             choice=int(choice)
@@ -52,6 +54,7 @@ def start_chat():   # Main Function
             break
         else:
             print "\n\n[[Select From Valid Options]]"
+
 
 def menu():             # Function for Second Menu options
     current_status_message=None
@@ -128,7 +131,13 @@ def send_a_message():           # Function to send a Message
         friend_choice = select_a_friend()           # Calling of select_a_friend() Function
         original_image = raw_input("What is the name of the image? ")
         output_path = "output.jpg"
-        text = raw_input("What do you want to say? ")
+        while True:
+            text = raw_input("What do you want to say? ")
+            if len(text) == 0:
+                print "Please Enter Message \n"
+            else:
+                break
+
         Steganography.encode(original_image, output_path, text)
         new_chat = ChatMessage(text,'',True)
         friends[friend_choice].chats.append(new_chat)
@@ -155,12 +164,12 @@ def read_a_message():           # Function to Read A Message
         friends[sender].chats.append(new_chat)
         print "Your secret message has been saved \n Message is : %s" % (secret_text)
 
-        if secret_text.upper() == 'SOS' or secret_text.upper() == 'SAVE ME' or secret_text.upper() == 'DANGER' or secret_text.upper() == 'SAVEME':
+        if secret_text.upper() == 'SOS' or secret_text.upper() == 'SAVE ME' or secret_text.upper() == 'SM' or secret_text.upper() == 'SAVEME':
             print "**WARNING** \n  Spy %s ''NEED HELP IMMEDIATELY''" % (friends[sender].name)
 
         if len(secret_text.split()) > 100:
             print "Your Friend Spy  %s Is speaking too much." % (friends[sender].name)
-            print "So, Cheif decided To Kick Spy Out of  The Application"
+            print "So, Chief decided To Kick Spy Out of  The Application"
             del friends[sender]
 
     except:
@@ -169,6 +178,7 @@ def read_a_message():           # Function to Read A Message
 
 def read_chat_history():
 
+
     try:
         read_for = select_a_friend()            # Calling of select_a_friend() Function
 
@@ -176,13 +186,31 @@ def read_chat_history():
 
         for chat in friends[read_for].chats:
             if chat.sent_by_me:
-                print '[%s] %s: %s' % (chat.time.strftime("%d %B %Y  %I:%M %p"), 'You said:', chat.message)
-            else:
-                print '[%s] %s (You Received): %s' % (chat.time.strftime("%d %B %Y  %I:%M %p"), friends[read_for].name, chat.message)
+                str = '[%s], %s' % (chat.time.strftime("%d %B %Y  %I:%M %p"), 'You said:')
+                c="%s" % (chat.message)
+                a,b=str.split(',',2)
+                screen.cprint(1, 0, a)
+                screen.cprint(0, 0, b)
+                screen.cprint(0, 0, c)
+                print '\n'
+                screen.reset_colors()
 
+            else:
+                str2 = '[%s] ,%s ' % (chat.time.strftime("%d %B %Y  %I:%M %p"), friends[read_for].name)
+                f="(You Received): %s" % (chat.message)
+                d,e=str2.split(',', 2)
+                screen.cprint(1, 0, d)
+                screen.cprint(4, 0, e)
+                screen.cprint(0, 0, f)
+                print '\n'
+                screen.reset_colors()
                 # read_chat history function ends
+
+
     except:
         print("[[You are not providing valid Information to Read the Chat]] \n")
+
+                # read_chat history function ends
 
 
 def select_a_friend():           # Function to show friend list
@@ -226,7 +254,6 @@ def add_friend() :              # Function to add Friend
                         print ("Your Friend has been Added \n")
                         friends.append(new_friend)
                         return "Number of Friends :"+str(len(friends))
-
 
 
 start_chat()               # Calling of main function start_chat()
