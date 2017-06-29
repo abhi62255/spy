@@ -34,22 +34,27 @@ def start_chat():   # Main Function
                         if spy.salutation.isalpha() == 0:
                             print("you are not providing valid information ")
                         else:
-                            spy.name = spy.salutation+" "+spy.name
-                            spy.rating = raw_input("Enter your rating : ")
-                            if len(spy.rating) == 0:
-                                print("You are not providing correct information \n")
-                            elif float(spy.rating) < user_spy_rating:
-                                print "Your Rating is not Good to be a Spy on this Application\n"
-                            else:
-                                spy.rating = float(spy.rating)      # Converting Rating into an Floating value
-                                if spy.rating > 4.0:
-                                    print("--->>>You Can Be A Good Leader<<<---")
-                                elif spy.rating < 4.0 and spy.rating > 3.0:
-                                    print("-->>You Are Good To BE In A Team<<--")
+                            try:
+                                spy.name = spy.salutation+" "+spy.name
+                                spy.rating = raw_input("Enter your rating : ")
+                                if len(spy.rating) == 0:
+                                    print("You are not providing correct information \n")
+                                elif float(spy.rating) < user_spy_rating:
+                                    print "Your Rating is not Good to be a Spy on this Application\n"
                                 else:
-                                    print("->We Can Always Use An Helping Hand<-")
-                                print (" Your account has been created \n Welcome %s .We are happy to have you here. \n Your age %s and Rating is %s" %(spy.name,spy.age,spy.rating))
-                                menu()         # Calling of menu function which provide second menu options
+                                    spy.rating = float(spy.rating)      # Converting Rating into an Floating value
+                                    if spy.rating > 4.0:
+                                        print("--->>>You Can Be A Good Leader<<<---")
+                                    elif spy.rating < 4.0 and spy.rating > 3.0:
+                                        print("-->>You Are Good To BE In A Team<<--")
+                                    else:
+                                        print("->We Can Always Use An Helping Hand<-")
+                                    print (" Your account has been created \n Welcome %s .We are happy to have you here. \n Your age %s and Rating is %s" %(spy.name,spy.age,spy.rating))
+                                    menu()         # Calling of menu function which provide second menu options
+
+                            except:
+                                print("You are not providing valid information \n")
+
         elif choice == 3:
             break
         else:
@@ -243,17 +248,20 @@ def add_friend() :              # Function to add Friend
                 if new_friend.salutation.isalpha() == 0:
                     print("You are not providing valid information\n ")
                 else:
-                    new_friend.name = new_friend.salutation + " " + new_friend.name
-                    new_friend.rating = raw_input("Enter your friends rating : ")
-                    if len(new_friend.rating) == 0:
-                        print("You are not providing correct information \n")
-                    elif float(new_friend.rating) < user_spy_rating :
-                        print "Your Friends Rating is not Good to be a Spy on this Application\n"
-                    else:
-                        new_friend.rating = float(new_friend.rating)          # Converting Rating Into Floating Type
-                        print ("Your Friend has been Added \n")
-                        friends.append(new_friend)
-                        return "Number of Friends :"+str(len(friends))
+                    try:
+                        new_friend.name = new_friend.salutation + " " + new_friend.name
+                        new_friend.rating = raw_input("Enter your friends rating : ")
+                        if len(new_friend.rating) == 0:
+                            print("You are not providing correct information \n")
+                        elif float(new_friend.rating) < user_spy_rating :
+                            print "Your Friends Rating is not Good to be a Spy on this Application\n"
+                        else:
+                            new_friend.rating = float(new_friend.rating)          # Converting Rating Into Floating Type
+                            print ("Your Friend has been Added \n")
+                            friends.append(new_friend)
+                            return "Number of Friends :"+str(len(friends))
+                    except:
+                        print("You are not Providing valid Information \n")
 
 
 start_chat()               # Calling of main function start_chat()
